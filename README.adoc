@@ -4,6 +4,7 @@
 :sectnumlevels: 4
 
 Python helper library.
+It consists of functions which can be used in multiple projects.
 
 == Usage
 . use this repository as _git_ submodule: `git submodule add git@github.com:bzgec/python_helperLib.git helperLib`
@@ -11,6 +12,5 @@ Python helper library.
 
 == License
 See the link:./LICENSE.adoc[LICENSE] file for license rights and limitations (MIT).
-
 
 == TODO

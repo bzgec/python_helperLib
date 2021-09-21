@@ -60,3 +60,17 @@ def cursorUpLines(n):
         cursorUpOneLine()
         clearLine()
         n -= 1
+
+
+# Function that returns true if the word is found
+def isWordPresent(sentence, word):
+    # To break the sentence in words
+    s = sentence.split(" ")
+
+    for i in s:
+        # Comparing the current word
+        # with the word to be searched
+        if i == word:
+            return True
+
+    return False
