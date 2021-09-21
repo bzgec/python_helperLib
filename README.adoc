@@ -1,0 +1,15 @@
+= Calculate stock price ratios
+:toc:
+:sectnums:
+:sectnumlevels: 4
+
+Python helper library.
+
+== Usage
+Use this repository as _git_ submodule and import it to your _python_ project as module.
+
+== License
+See the link:./LICENSE.adoc[LICENSE] file for license rights and limitations (MIT).
+
+
+== TODO
