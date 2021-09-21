@@ -6,7 +6,8 @@
 Python helper library.
 
 == Usage
-Use this repository as _git_ submodule and import it to your _python_ project as module.
+. use this repository as _git_ submodule: `git submodule add git@github.com:bzgec/python_helperLib.git helperLib`
+. import it to your _python_ project as module: `from helperLib.helper import sprintf, printf`
 
 == License
 See the link:./LICENSE.adoc[LICENSE] file for license rights and limitations (MIT).
