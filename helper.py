@@ -74,3 +74,7 @@ def isWordPresent(sentence, word):
             return True
 
     return False
+
+
+def getSmallestPositiveValueIdx(arr):
+    return arr.index(min(arr))
