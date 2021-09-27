@@ -1,0 +1,38 @@
+Options:
+    -h
+    --help
+        Show this help
+
+    -f SENDER_GMAIL
+    --sender SENDER_GMAIL
+        Gmail from which emails are send.
+
+    -p SENDER_GMAIL_PASSWORD
+    --password SENDER_GMAIL_PASSWORD
+        Password to Gmail account from which emails are send.
+
+    --port SMTP_SERVER_PORT
+        Port of SMTP server.
+
+        Default value is 465.
+
+    --server SMTP_SERVER_NAME
+        Server domain name.
+
+        Default value is "smtp.gmail.com".
+
+    -r RECEIVER_EMAIL
+    --receiver RECEIVER_EMAIL
+        Receiver email (emails are send to this account/address).
+
+    -x SUBJECT_TEXT
+    --subject SUBJECT_TEXT
+        Email subject.
+
+    -c EMAIL_CONTENT
+    --content EMAIL_CONTENT
+        Email content. Can be in HTML format.
+
+    -a EMAIL_ATTACHMENT
+    --attachment EMAIL_ATTACHMENT
+        Email attachment (file to attach to email).
