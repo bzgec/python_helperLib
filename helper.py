@@ -95,3 +95,17 @@ def isWordPresent(sentence, word):
 
 def getSmallestPositiveValueIdx(arr):
     return arr.index(min(arr))
+
+
+# Logger setup
+def loggerSetup(loggerName, logFile, level=logging.INFO, dateFormat='%Y/%m/%d %H:%M:%S', fileMode='a'):
+    formatter = logging.Formatter('%(asctime)s %(name)-12s %(levelname)-8s %(message)s', dateFormat)
+
+    setupFiles(logFile)
+
+    handler = logging.FileHandler(logFile, fileMode)
+    handler.setFormatter(formatter)
+    logger = logging.getLogger(loggerName)
+    logger.setLevel(level)
+    logger.addHandler(handler)
+    return logger
