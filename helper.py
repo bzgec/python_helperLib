@@ -1,5 +1,6 @@
 import os
 import sys
+import logging
 
 
 class color:
@@ -29,10 +30,26 @@ def green_str(str):
 
 # Check if file path exists, if it doesn't create it
 def setupFiles(files):
-    for file in files:
-        directory = os.path.dirname(file)
+    def setupFile(filePath):
+        directory = os.path.dirname(filePath)
         if not os.path.exists(directory) and directory != "" and directory != ".":
             os.makedirs(directory)
+
+        if not os.path.isdir(filePath):
+            # Path is not a directory -> path is a file
+            if not os.path.isfile(filePath):
+                # File doesn't exist
+                with open(filePath, "w") as file:
+                    # Just create empty file
+                    file.write("")
+
+    if type(files) is list:
+        # Argument is a list of file/folders
+        for filePath in files:
+            setupFile(filePath)
+    else:
+        # Argument is a string
+        setupFile(files)
 
 
 # C like sprintf function
