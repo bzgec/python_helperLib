@@ -1,6 +1,7 @@
 import os
 import sys
 import logging
+import json
 
 
 class color:
@@ -109,3 +110,18 @@ def loggerSetup(loggerName, logFile, level=logging.INFO, dateFormat='%Y/%m/%d %H
     logger.setLevel(level)
     logger.addHandler(handler)
     return logger
+
+
+def isJson(jsonStr, objStr=None):
+    try:
+        jsonObj = json.loads(jsonStr)
+        json.dumps(jsonObj)
+
+        if objStr is not None:
+            myObj = jsonObj[objStr]
+            myObj  # To ignore "F841" warning
+
+    except Exception:
+        return False
+
+    return True
