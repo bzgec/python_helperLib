@@ -119,6 +119,10 @@ class Mail:
             mail.attach(html_content)
 
             if attachments is not None:
+                if type(attachments) is not list:
+                    # `attachments` in just a single file (not a list)
+                    attachments = [attachments]  # Create a list of a single file
+
                 # Attaching an attachment
                 for attachment in attachments:
                     file_path = attachment
