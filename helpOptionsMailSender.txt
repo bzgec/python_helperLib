@@ -23,7 +23,8 @@ Options:
 
     -r RECEIVER_EMAIL
     --receiver RECEIVER_EMAIL
-        Receiver email (emails are send to this account/address).
+        Receiver email addresses, single or multiple receivers,
+        (emails are send to this account's/addresses).
 
     -x SUBJECT_TEXT
     --subject SUBJECT_TEXT

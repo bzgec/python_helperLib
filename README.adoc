@@ -8,7 +8,9 @@ It consists of functions which can be used in multiple projects.
 
 == Usage
 . use this repository as _git_ submodule: `git submodule add git@github.com:bzgec/python_helperLib.git helperLib`
-. import it to your _python_ project as module: `from helperLib.helper import sprintf, printf`
+. import it to your _python_ project as module:
+* `from helperLib.helper import sprintf, printf`
+* `import helperLib.mailSender as mailSender`
 . you can also use link:mailSender.py[] from terminal
 
 == Development
