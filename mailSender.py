@@ -68,7 +68,7 @@ def checkArgs(handle, argv):  # noqa: C901
         elif opt in ("--server"):
             handle["smtpServer"] = arg
         elif opt in ("-r", "--receiver"):
-            handle["receiverMail"] = arg
+            handle["receiversMail"].append(arg)
         elif opt in ("-x", "--subject"):
             handle["subject"] = arg
         elif opt in ("-c", "--content"):
@@ -96,45 +96,53 @@ class Mail:
     def getDefault_smtpServer(self):
         return "smtp.gmail.com"
 
-    def send(self, email, subject, content, attachments=None):
+    def send(self, receivers, subject, content, attachments=None):
         mailSendStatus = 1
 
-        ssl_context = ssl.create_default_context()
-        service = smtplib.SMTP_SSL(self.smtpServer, self.port, context=ssl_context)
-        service.login(self.senderMail, self.password)
-
         try:
-            mail = MIMEMultipart('alternative')
-            mail['Subject'] = subject
-            mail['From'] = self.senderMail
-            mail['To'] = email
+            if type(receivers) is not list:
+                # `receivers` in just a single string (not a list)
+                receivers = [receivers]  # Create a list of strings
 
-            text_mail = "Your mail reader does not support the report format."
+            # Attaching an attachment
+            for receiver in receivers:
+                ssl_context = ssl.create_default_context()
+                service = smtplib.SMTP_SSL(self.smtpServer, self.port, context=ssl_context)
+                service.login(self.senderMail, self.password)
 
-            html_content = MIMEText(content.format(email.split("@")[0]), 'html')
-            text_content = MIMEText(text_mail.format(email.split("@")[0]), 'plain')
 
-            # Attaching messages to MIMEMultipart
-            mail.attach(text_content)
-            mail.attach(html_content)
+                mail = MIMEMultipart('alternative')
+                mail['Subject'] = subject
+                mail['From'] = self.senderMail
+                mail['To'] = receiver
 
-            if attachments is not None:
-                if type(attachments) is not list:
-                    # `attachments` in just a single file (not a list)
-                    attachments = [attachments]  # Create a list of a single file
+                text_mail = "Your mail reader does not support the report format."
 
-                # Attaching an attachment
-                for attachment in attachments:
-                    file_path = attachment
-                    mimeBase = MIMEBase("application", "octet-stream")
-                    with open(file_path, "rb") as file:
-                        mimeBase.set_payload(file.read())
-                    encoders.encode_base64(mimeBase)
-                    mimeBase.add_header("Content-Disposition", f"attachment; filename={Path(file_path).name}")
-                    mail.attach(mimeBase)
+                html_content = MIMEText(content.format(receiver.split("@")[0]), 'html')
+                text_content = MIMEText(text_mail.format(receiver.split("@")[0]), 'plain')
 
-            service.sendmail(self.senderMail, email, mail.as_string())
-            service.quit()
+                # Attaching messages to MIMEMultipart
+                mail.attach(text_content)
+                mail.attach(html_content)
+
+                if attachments is not None:
+                    if type(attachments) is not list:
+                        # `attachments` in just a single file (not a list)
+                        attachments = [attachments]  # Create a list of a single file
+
+                    # Attaching an attachment
+                    for attachment in attachments:
+                        file_path = attachment
+                        mimeBase = MIMEBase("application", "octet-stream")
+                        with open(file_path, "rb") as file:
+                            mimeBase.set_payload(file.read())
+                        encoders.encode_base64(mimeBase)
+                        mimeBase.add_header("Content-Disposition", f"attachment; filename={Path(file_path).name}")
+                        mail.attach(mimeBase)
+
+                service.sendmail(self.senderMail, receiver, mail.as_string())
+                service.quit()
+
             mailSendStatus = 0
 
         except Exception:
@@ -153,7 +161,7 @@ def checkScriptParams(handle):
         print("Missing sender email password!")
         sys.exit(2)
 
-    if handle["receiverMail"] is None:
+    if handle["receiversMail"] is None:
         print("Missing receiver email!")
         sys.exit(2)
 
@@ -168,7 +176,7 @@ def main():
         "pass": None,
         "port": None,
         "smtpServer": None,
-        "receiverMail": None,
+        "receiversMail": [],
         "subject": None,
         "content": "",
         "attachments": [],
@@ -191,7 +199,7 @@ def main():
                                 handle["smtpServer"])
 
     # Send email
-    mailSendStatus = handle["mailHandle"].send(handle["receiverMail"],
+    mailSendStatus = handle["mailHandle"].send(handle["receiversMail"],
                                                handle["subject"],
                                                handle["content"],
                                                handle["attachments"])
